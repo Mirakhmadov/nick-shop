@@ -61,10 +61,38 @@ public class TemplateService {
         }
     }
 
+    public CustomResponse addTemplateImage(MultipartHttpServletRequest request) {
+        try {
+            Integer id = Integer.parseInt(request.getParameter("id"));
+            UUID uuid = attachmentService.uploadFile(request);
+
+            Template template = templateRepo.getOne(id);
+
+            List<Attachment> attachmentList = template.getAttachment();
+            attachmentList.add(attachmentRepo.findById(uuid).orElseThrow(() -> new ResourceNotFoundException("get Attachment")));
+
+            template.setAttachment(attachmentList);
+
+            templateRepo.save(template);
+
+            return responseService.savedResponse(template);
+        } catch (Exception e) {
+            return responseService.tryErrorResponse();
+        }
+    }
+
 
     public List<TemplateDto> getTemplates() {
         try {
             return templateRepo.findAll().stream().map(this::getTemplate).collect(Collectors.toList());
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public TemplateDto getTemplateOne(Integer id) {
+        try {
+            return getTemplate(templateRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("get Template")));
         } catch (Exception e) {
             return null;
         }

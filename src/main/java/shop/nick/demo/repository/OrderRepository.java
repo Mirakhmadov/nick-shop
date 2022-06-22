@@ -1,11 +1,7 @@
 package shop.nick.demo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import shop.nick.demo.entity.Template;
+import shop.nick.demo.entity.Order;
+public interface OrderRepository extends JpaRepository<Order, Integer> {
 
-import java.util.Optional;
-
-public interface TemplateRepository extends JpaRepository<Template, Integer> {
-
-    boolean existsByNameEqualsIgnoreCase(String name);
 }

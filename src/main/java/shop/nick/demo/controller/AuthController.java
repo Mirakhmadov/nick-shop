@@ -23,13 +23,14 @@ public class AuthController {
 
 
     @GetMapping("/auth/login")
-    public String loginPage() {
+    public String loginPage(HttpServletResponse response) throws IOException {
         User user = customConfig.getPrincipal();
         if (user != null) {
-            return "auth/authenticated";
+            response.sendRedirect("/auth/authenticated");
         }
         return "auth/login";
     }
+
 
     @GetMapping("/auth/authenticated")
     public String authenticatedPage(Model model, HttpServletResponse response) throws IOException {

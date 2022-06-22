@@ -10,12 +10,13 @@
         <div class="col-2">
             <h4 th:text="${user.getUsername()}"></h4>
             <hr>
-            <a href="#" class="btn btn-outline-success btn-block">Menu 1</a>
+            <a href="/admin/index" class="btn btn-success btn-block">Home Page</a>
             <a href="#" class="btn btn-outline-success btn-block">Menu 2</a>
             <a href="#" class="btn btn-outline-success btn-block">Menu 3</a>
             <a href="#" class="btn btn-outline-success btn-block">Menu 4</a>
 
-            <button type="button" class="btn btn-primary btn-block my-1" data-toggle="modal" data-target="#exampleModal1">
+            <button type="button" class="btn btn-primary btn-block my-1" data-toggle="modal"
+                    data-target="#exampleModal1">
                 Create Template
             </button>
         </div>
@@ -25,10 +26,16 @@
             <hr>
             <div class="row">
                 <div class="col-3" th:each="template : ${templates}" th:with="attachment=${template.attachments[0]}">
-                    <img th:src="@{${'/attachment/' + attachment.id}}" class="img-thumbnail" style="height: 250px"/>
-                    <hr>
+                    <img th:src="@{${'/attachment/' + attachment.id}}" class="img-thumbnail mt-1"
+                         style="height: 250px"/>
                     <h3 th:text="${template.name}"></h3>
                     <p><b>Price : </b><span th:text="${template.price}" th:remove="tag"></span></p>
+                    <p>Description</p>
+                    <p th:text="${template.description}" th:remove="tag"></p>
+
+                    <div class="row">
+                        <a class="btn btn-outline-primary" th:href="@{${'/admin/template/' + template.id}}">View</a>
+                    </div>
                 </div>
             </div>
 
